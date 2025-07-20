@@ -7,8 +7,7 @@
   ];
   env = { };
   idx = {
-    extensions = [
-    ];
+    extensions = [ ];
     previews = {
       enable = true;
       previews = { };
@@ -36,18 +35,7 @@
           fi
         '';
       };
-      onStart = {
-        zsh-init = ''
-          echo "[onStart] Iniciando o ZSH..."
-
-          if ! grep -q "exec zsh" ~/.bashrc; then
-            echo "[onStart] Adicionado 'exec zsh' ao ~/.bashrc"
-            printf "\nexec zsh\n" >> ~/.bashrc
-          else
-            echo "[onStart] 'exec zsh' já presente no ~/.bashrc"
-          fi
-        '';
-        };
+      onStart = { };
     };
   };
 }
