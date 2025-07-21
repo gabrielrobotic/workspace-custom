@@ -4,10 +4,23 @@
     zsh
     git
     curl
+    zip
   ];
   env = { };
   idx = {
-    extensions = [ ];
+    extensions = [
+      "redhat.java"
+      "vmware.vscode-boot-dev-pack"
+      "vmware.vscode-spring-boot"
+      "vscjava.vscode-gradle"
+      "vscjava.vscode-java-debug"
+      "vscjava.vscode-java-dependency"
+      "vscjava.vscode-java-pack"
+      "vscjava.vscode-java-test"
+      "vscjava.vscode-maven"
+      "vscjava.vscode-spring-boot-dashboard"
+      "vscjava.vscode-spring-initializr"
+    ];
     previews = {
       enable = true;
       previews = { };
@@ -35,7 +48,35 @@
           fi
         '';
       };
-      onStart = { };
+      onStart = {
+        sdkman-install = ''
+          echo "🔧 Verificando SDKMAN..."
+
+          export SDKMAN_DIR="$HOME/.sdkman"
+
+          if [ ! -d "$SDKMAN_DIR" ]; then
+            echo "📦 Instalando SDKMAN..."
+            curl -s "https://get.sdkman.io" | bash
+          else
+            echo "✅ SDKMAN já instalado."
+          fi
+
+          if [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+            source "$SDKMAN_DIR/bin/sdkman-init.sh"
+            echo "🚀 SDKMAN carregado!"
+          else
+            echo "⚠️ Não foi possível carregar o SDKMAN."
+          fi
+
+          if command -v sdk >/dev/null 2>&1; then
+            sdk install java 21.0.8-zulu
+          else
+            echo "⚠️ Comando 'sdk' não disponível."
+          fi
+
+          zsh
+        '';
+      };
     };
   };
 }
